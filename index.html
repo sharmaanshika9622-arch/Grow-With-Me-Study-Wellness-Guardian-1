@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grow-With-Me — Study Wellness Guardian</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="wrap">
+  <nav>
+    <div class="brand">🌱 grow-with-me</div>
+    <a class="repo-link" href="#" id="repoLink">View on GitHub ↗</a>
+  </nav>
+
+  <header class="hero">
+    <div class="eyebrow">School AI Project — Runs Entirely In Your Browser</div>
+    <h1>One camera watches.<br>Three different <span class="accent">coaches</span> respond.</h1>
+    <p class="lede">
+      A webcam-based wellness guardian that tracks posture and eye strain during study
+      sessions — then coaches a 7-year-old, a 12-year-old, and a 17-year-old completely
+      differently, because a single fixed rule was never going to fit all of them.
+      No install needed — the AI models run live in this page.
+    </p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="#demo">Try the live demo</a>
+      <a class="btn btn-ghost" href="#growth">See the age profiles</a>
+    </div>
+  </header>
+
+  <!-- ================= LIVE DEMO ================= -->
+  <section id="demo">
+    <div class="kicker">Live in this page</div>
+    <h2>Try it right now</h2>
+    <p class="section-lede">
+      Nothing is recorded or uploaded — video never leaves your device. Pick an age
+      profile, allow camera access, and start a session.
+    </p>
+
+    <div class="profile-picker">
+      <button class="profile-btn" data-age="lower">Lower (5–9 yrs)</button>
+      <button class="profile-btn active" data-age="middle">Middle (10–14 yrs)</button>
+      <button class="profile-btn" data-age="higher">Higher (15–18 yrs)</button>
+    </div>
+
+    <div class="demo-panel">
+      <div class="video-stage">
+        <video id="webcam" autoplay playsinline muted></video>
+        <canvas id="overlay"></canvas>
+        <div id="alertBox" class="alert-box"></div>
+      </div>
+
+      <div class="demo-side">
+        <div class="stat-card">
+          <span class="stat-label">Slouch angle</span>
+          <span id="slouchStat" class="stat-value">—</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Blink rate</span>
+          <span id="blinkStat" class="stat-value">—</span>
+        </div>
+        <div class="demo-controls">
+          <button id="startBtn" class="btn btn-primary">Start session</button>
+          <button id="stopBtn" class="btn btn-ghost" disabled>Stop</button>
+        </div>
+        <p id="status" class="status-text">Choose a profile and press start.</p>
+      </div>
+    </div>
+
+    <div id="summaryBox" class="summary-box"></div>
+  </section>
+
+  <section id="how">
+    <div class="kicker">How it reads you</div>
+    <h2>Two signals, watched every frame</h2>
+    <p class="section-lede">
+      Both AI models run locally in your browser via WebAssembly — nothing is sent to
+      a server.
+    </p>
+    <div class="signal-grid">
+      <div class="signal-card">
+        <span class="glyph">🦴</span>
+        <h3>Spine angle</h3>
+        <p>
+          MediaPipe's PoseLandmarker locates the shoulder and ear. The angle between
+          that line and vertical is the slouch signal — the more you lean in, the
+          wider it opens.
+        </p>
+      </div>
+      <div class="signal-card">
+        <span class="glyph">👁</span>
+        <h3>Blink rate</h3>
+        <p>
+          MediaPipe's FaceLandmarker outputs live blink-strength scores per eye. A
+          healthy rate sits near 15–20/min — screen-staring quietly drags it down to 5–7.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="growth" class="chart-section">
+    <div class="kicker">The signature idea</div>
+    <h2>A growth chart, not a rulebook</h2>
+    <p class="section-lede">
+      Like the height marks on a classroom wall, but instead of centimeters, each mark
+      is a different tolerance, a different voice.
+    </p>
+
+    <div class="growth-wrap">
+      <div class="growth-rail" aria-hidden="true">
+        <svg viewBox="0 0 64 420" preserveAspectRatio="none">
+          <line x1="32" y1="10" x2="32" y2="410" stroke="var(--rule)" stroke-width="2"/>
+          <circle cx="32" cy="70" r="5" fill="var(--coral)"/>
+          <circle cx="32" cy="210" r="5" fill="var(--blue-chalk)"/>
+          <circle cx="32" cy="350" r="5" fill="var(--yellow)"/>
+        </svg>
+      </div>
+      <div class="growth-rows">
+        <div class="growth-row">
+          <span class="tag tag-lower">5–9 yrs</span>
+          <div class="content">
+            <h3>"Buddy the Bear says sit up tall! 🦸"</h3>
+            <p>Short attention span, shortest tolerance — the earliest nudge, the most playful voice.</p>
+            <div class="stats">
+              <span>slouch limit: 20s</span>
+              <span>blink floor: 12/min</span>
+            </div>
+          </div>
+        </div>
+        <div class="growth-row">
+          <span class="tag tag-middle">10–14 yrs</span>
+          <div class="content">
+            <h3>"Small habits add up — straighten up."</h3>
+            <p>Framed as habit-building rather than a scolding — this age responds to streaks, not stories.</p>
+            <div class="stats">
+              <span>slouch limit: 40s</span>
+              <span>blink floor: 10/min</span>
+            </div>
+          </div>
+        </div>
+        <div class="growth-row">
+          <span class="tag tag-higher">15–18 yrs</span>
+          <div class="content">
+            <h3>"Blink rate has dropped below healthy range."</h3>
+            <p>Longest tolerance, plain data — treated like a self-improvement dashboard, not a nag.</p>
+            <div class="stats">
+              <span>slouch limit: 60s</span>
+              <span>blink floor: 8/min</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="stack">
+    <div class="kicker">Built with</div>
+    <h2>Tech stack</h2>
+    <div class="stack-list">
+      <span class="stack-pill">HTML / CSS / JavaScript</span>
+      <span class="stack-pill">MediaPipe Tasks Vision (browser)</span>
+      <span class="stack-pill">PoseLandmarker</span>
+      <span class="stack-pill">FaceLandmarker + blendshapes</span>
+      <span class="stack-pill">WebAssembly, runs on-device</span>
+    </div>
+  </section>
+
+  <footer>
+    <span>Grow-With-Me Study Wellness Guardian — school AI project</span>
+    <span class="mono">posture + eye-strain + age-adaptive coaching</span>
+  </footer>
+</div>
+
+<script src="profiles.js"></script>
+<script type="module" src="app.js"></script>
+</body>
+</html>
